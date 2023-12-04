@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>Jogo de Bingo</title>
+  <title>Jogo do Bingo</title>
 </head>
+
 <body>
-  <div id="players-container">
-    <div class="player">
-      <h2>Jogador 1</h2>
-      <div id="player1-board" class="player-board"></div>
-    </div>
-    <div class="player">
-      <h2>Jogador 2</h2>
-      <div id="player2-board" class="player-board"></div>
-    </div>
-  </div>
+  <div id="players-container"></div>
   <div id="bingo-board" class="board"></div>
-  <button id="generate-board">Gerar Cartela</button>
-  <button id="call-number">Chamar Número</button>
+  <div class="titulo">
+    <h1>Jogo do Bingo</h1>
+  </div>
+  <div class="buttons">
+    <button class="b1" id="generate-board">Gerar Cartela</button>
+    <button class="b1" id="generate-all-numbers">Gerar Todos</button>
+    <button class="b1" id="restart-game">Reiniciar Jogo</button>
+  </div>
+  <table id="called-numbers"></table>
   <script src="main.js"></script>
 </body>
+
 </html>

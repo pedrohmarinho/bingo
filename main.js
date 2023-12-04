@@ -71,7 +71,7 @@ function checkForWinner() {
 
   if (winners.length > 0) {
     alert(`Parabéns, ${winners.join(' e ')}! Vocês ganharam o jogo!`);
-    restartAndBackToHome();
+    displayRestartMessage();
     return true;
   }
 
@@ -112,16 +112,11 @@ function generateAllNumbers() {
 
       if (numbersCalled.length === 75) {
         alert('Todos os números foram chamados!');
-        clearInterval(intervalId);
         restartAndBackToHome();
+        clearInterval(intervalId);
       }
     }, 300);
   }
-}
-
-function restartAndBackToHome() {
-  location.reload();
-  generateAllButton.style.display = 'none'; // Oculta o botão ao reiniciar o jogo
 }
 
 function initializeGame() {
@@ -145,6 +140,16 @@ function initializeGame() {
   } else {
     alert('Número de jogadores inválido. O jogo requer entre 2 e 4 jogadores.');
   }
+}
+
+function displayRestartMessage() {
+  const restartMessage = document.createElement('div');
+  restartMessage.innerHTML = '<p>Clique em "Reiniciar Jogo" para jogar novamente.</p>';
+  document.body.appendChild(restartMessage);
+}
+
+function restartAndBackToHome() {
+  location.reload();
 }
 
 generateButton.addEventListener('click', initializeGame);

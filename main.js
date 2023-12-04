@@ -72,10 +72,21 @@ function checkForWinner() {
   if (winners.length > 0) {
     alert(`Parabéns, ${winners.join(' e ')}! Vocês ganharam o jogo!`);
     displayRestartMessage();
+    toggleButtonsVisibility(); // Oculta os botões
     return true;
   }
 
   return false;
+}
+
+function displayRestartMessage() {
+  const restartMessage = document.createElement('div');
+  restartMessage.innerHTML = '<p style="font-size: 20px; text-align: center;">Clique em "Reiniciar Jogo" para jogar novamente.</p>';
+  document.getElementById('players-container').appendChild(restartMessage);
+}
+
+function restartAndBackToHome() {
+  location.reload();
 }
 
 function generateAllNumbers() {
@@ -125,6 +136,10 @@ function initializeGame() {
   if (numPlayers >= 2 && numPlayers <= 4) {
     for (let i = 1; i <= numPlayers; i++) {
       const playerName = prompt(`Digite o nome do jogador ${i}:`);
+      if (playerName === null) {
+        restartAndBackToHome();
+        return;
+      }
       const player = { id: i, name: playerName };
       players.push(player);
       const playerDiv = document.createElement('div');
@@ -142,14 +157,11 @@ function initializeGame() {
   }
 }
 
-function displayRestartMessage() {
-  const restartMessage = document.createElement('div');
-  restartMessage.innerHTML = '<p>Clique em "Reiniciar Jogo" para jogar novamente.</p>';
-  document.body.appendChild(restartMessage);
-}
 
-function restartAndBackToHome() {
-  location.reload();
+function toggleButtonsVisibility() {
+  generateButton.style.display = 'none';
+  generateAllButton.style.display = 'none';
+  restartButton.style.display = 'block';
 }
 
 generateButton.addEventListener('click', initializeGame);

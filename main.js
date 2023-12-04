@@ -4,10 +4,13 @@ const restartButton = document.getElementById('restart-game');
 const board = document.getElementById('bingo-board');
 const playersContainer = document.getElementById('players-container');
 
-
 let numbersCalled = [];
 let players = [];
+let canStartGame = false;
 
+function toggleStartButton() {
+  generateAllButton.style.display = canStartGame ? 'block' : 'none';
+}
 
 function generateRandomNumber(usedNumbers) {
   let number;
@@ -17,42 +20,36 @@ function generateRandomNumber(usedNumbers) {
   return number;
 }
 
-
 function generateBoard(player) {
   const playerBoard = document.getElementById(`player${player.id}-board`);
   playerBoard.innerHTML = '';
   const usedNumbers = [];
-
 
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {
       const square = document.createElement('div');
       square.className = 'board-item';
 
-
-      // Adiciona a classe center-cell à célula central
       if (i === 2 && j === 2) {
         square.className += ' center-cell';
-        square.innerText = 'X'; // Adiciona 'X' na célula central
+        square.innerText = 'X';
       } else {
         const number = generateRandomNumber(usedNumbers);
         usedNumbers.push(number);
         square.innerText = number;
       }
 
-
       playerBoard.appendChild(square);
     }
   }
+
+  canStartGame = true;
+  toggleStartButton();
 }
-
-
-
 
 function toggleActiveSquare(square) {
   square.classList.toggle('active');
 }
-
 
 function checkWinner(player) {
   const playerBoard = document.getElementById(`player${player.id}-board`);
@@ -61,22 +58,25 @@ function checkWinner(player) {
     square.classList.contains('active')
   );
 
-
   return markedSquares.length === 24;
 }
 
-
 function checkForWinner() {
+  const winners = [];
   for (let i = 0; i < players.length; i++) {
     if (checkWinner(players[i])) {
-      alert(`Parabéns, ${players[i].name}! Você ganhou o jogo!`);
-      restartAndBackToHome();
-      return true;
+      winners.push(players[i].name);
     }
   }
+
+  if (winners.length > 0) {
+    alert(`Parabéns, ${winners.join(' e ')}! Vocês ganharam o jogo!`);
+    restartAndBackToHome();
+    return true;
+  }
+
   return false;
 }
-
 
 function generateAllNumbers() {
   if (numbersCalled.length === 75) {
@@ -93,7 +93,6 @@ function generateAllNumbers() {
       const number = generateRandomNumber(numbersCalled);
       numbersCalled.push(number);
 
-      // Verifica se uma nova linha deve ser adicionada
       if (table.rows.length === 0 || table.rows[table.rows.length - 1].cells.length >= 12) {
         const newRow = table.insertRow(-1);
       }
@@ -116,20 +115,17 @@ function generateAllNumbers() {
         clearInterval(intervalId);
         restartAndBackToHome();
       }
-    }, 300); // Intervalo de 700 milissegundos (0.7 segundos) entre cada número
+    }, 300);
   }
 }
 
-
-
 function restartAndBackToHome() {
   location.reload();
+  generateAllButton.style.display = 'none'; // Oculta o botão ao reiniciar o jogo
 }
-
 
 function initializeGame() {
   const numPlayers = prompt('Digite o número de jogadores (entre 2 e 4):');
-
 
   if (numPlayers >= 2 && numPlayers <= 4) {
     for (let i = 1; i <= numPlayers; i++) {
@@ -150,7 +146,6 @@ function initializeGame() {
     alert('Número de jogadores inválido. O jogo requer entre 2 e 4 jogadores.');
   }
 }
-
 
 generateButton.addEventListener('click', initializeGame);
 generateAllButton.addEventListener('click', generateAllNumbers);

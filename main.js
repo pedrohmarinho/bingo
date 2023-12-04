@@ -4,8 +4,10 @@ const restartButton = document.getElementById('restart-game');
 const board = document.getElementById('bingo-board');
 const playersContainer = document.getElementById('players-container');
 
+
 let numbersCalled = [];
 let players = [];
+
 
 function generateRandomNumber(usedNumbers) {
   let number;
@@ -15,23 +17,42 @@ function generateRandomNumber(usedNumbers) {
   return number;
 }
 
+
 function generateBoard(player) {
   const playerBoard = document.getElementById(`player${player.id}-board`);
   playerBoard.innerHTML = '';
   const usedNumbers = [];
-  for (let i = 0; i < 24; i++) {
-    const square = document.createElement('div');
-    square.className = 'board-item';
-    const number = generateRandomNumber(usedNumbers);
-    usedNumbers.push(number);
-    square.innerText = number;
-    playerBoard.appendChild(square);
+
+
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      const square = document.createElement('div');
+      square.className = 'board-item';
+
+
+      // Adiciona a classe center-cell à célula central
+      if (i === 2 && j === 2) {
+        square.className += ' center-cell';
+        square.innerText = 'X'; // Adiciona 'X' na célula central
+      } else {
+        const number = generateRandomNumber(usedNumbers);
+        usedNumbers.push(number);
+        square.innerText = number;
+      }
+
+
+      playerBoard.appendChild(square);
+    }
   }
 }
+
+
+
 
 function toggleActiveSquare(square) {
   square.classList.toggle('active');
 }
+
 
 function checkWinner(player) {
   const playerBoard = document.getElementById(`player${player.id}-board`);
@@ -40,8 +61,10 @@ function checkWinner(player) {
     square.classList.contains('active')
   );
 
+
   return markedSquares.length === 24;
 }
+
 
 function checkForWinner() {
   for (let i = 0; i < players.length; i++) {
@@ -53,6 +76,7 @@ function checkForWinner() {
   }
   return false;
 }
+
 
 function generateAllNumbers() {
   if (numbersCalled.length === 75) {
@@ -66,12 +90,15 @@ function generateAllNumbers() {
         return;
       }
 
+
       const number = generateRandomNumber(numbersCalled);
       numbersCalled.push(number);
+
 
       const newRow = table.insertRow(-1);
       const cell1 = newRow.insertCell(0);
       cell1.innerHTML = number;
+
 
       players.forEach(player => {
         const squares = document.querySelectorAll(`#player${player.id}-board .board-item`);
@@ -82,6 +109,7 @@ function generateAllNumbers() {
         });
       });
 
+
       if (numbersCalled.length === 75) {
         alert('Todos os números foram chamados!');
         clearInterval(intervalId);
@@ -91,12 +119,15 @@ function generateAllNumbers() {
   }
 }
 
+
 function restartAndBackToHome() {
   location.reload();
 }
 
+
 function initializeGame() {
   const numPlayers = prompt('Digite o número de jogadores (entre 2 e 4):');
+
 
   if (numPlayers >= 2 && numPlayers <= 4) {
     for (let i = 1; i <= numPlayers; i++) {
@@ -117,6 +148,7 @@ function initializeGame() {
     alert('Número de jogadores inválido. O jogo requer entre 2 e 4 jogadores.');
   }
 }
+
 
 generateButton.addEventListener('click', initializeGame);
 generateAllButton.addEventListener('click', generateAllNumbers);

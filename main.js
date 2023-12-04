@@ -90,15 +90,17 @@ function generateAllNumbers() {
         return;
       }
 
-
       const number = generateRandomNumber(numbersCalled);
       numbersCalled.push(number);
 
+      // Verifica se uma nova linha deve ser adicionada
+      if (table.rows.length === 0 || table.rows[table.rows.length - 1].cells.length >= 12) {
+        const newRow = table.insertRow(-1);
+      }
 
-      const newRow = table.insertRow(-1);
-      const cell1 = newRow.insertCell(0);
-      cell1.innerHTML = number;
-
+      const newRow = table.rows[table.rows.length - 1];
+      const cell = newRow.insertCell(-1);
+      cell.innerHTML = number;
 
       players.forEach(player => {
         const squares = document.querySelectorAll(`#player${player.id}-board .board-item`);
@@ -109,15 +111,15 @@ function generateAllNumbers() {
         });
       });
 
-
       if (numbersCalled.length === 75) {
         alert('Todos os números foram chamados!');
         clearInterval(intervalId);
         restartAndBackToHome();
       }
-    }, 200); // Intervalo de 700 milissegundos (0.7 segundos) entre cada número
+    }, 300); // Intervalo de 700 milissegundos (0.7 segundos) entre cada número
   }
 }
+
 
 
 function restartAndBackToHome() {

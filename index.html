@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Jogo do Bingo</title>
 </head>
-
 
 <body>
   <div id="players-container"></div>
@@ -17,13 +15,15 @@
     <h1>Jogo do Bingo</h1>
   </div>
   <div class="buttons">
-    <button class="b1" id="generate-board">Gerar Cartela</button>
-    <button class="b1" id="generate-all-numbers">Gerar Todos</button>
+    <button class="b1" id="generate-board">Criar Cartelas</button>
+    <button class="b1" id="generate-all-numbers">Iniciar Jogo</button>
     <button class="b1" id="restart-game">Reiniciar Jogo</button>
   </div>
-  <table id="called-numbers"></table>
-  <script src="main.js"></script>
+  <div id="called-numbers-container">
+    <table id="called-numbers" class="called-numbers"></table>
+  </div>
 </body>
-
+<script src="main.js"></script>
+</body>
 
 </html>

@@ -82,7 +82,7 @@ function checkForWinner() {
 function displayRestartMessage() {
   const restartMessage = document.createElement('div');
   restartMessage.innerHTML = '<p style="font-size: 20px; text-align: center;">Clique em "Reiniciar Jogo" para jogar novamente.</p>';
-  document.getElementById('players-container').appendChild(restartMessage);
+  document.getElementById('mensagem').appendChild(restartMessage);
 }
 
 function restartAndBackToHome() {
